@@ -1,4 +1,6 @@
 // API Key
+
+// changes nit reflect 
 const API_KEY = "48394ddb7198d553ec33128fced2ead6";
 
 const userTab = document.querySelector("[data-userWeather]");
@@ -17,7 +19,6 @@ let currentTab = userTab;
 currentTab.classList.add("currentTab");
 getFromSessionStorage();
 
-// con-- nto why nnot working properly
 function switchTab(newTab) {
     notFound.classList.remove("active");
     // check if newTab is already selected or not 
