@@ -17,7 +17,7 @@ let currentTab = userTab;
 currentTab.classList.add("currentTab");
 getFromSessionStorage();
 
-// cheking the contrubution
+// checking failed due
 
 function switchTab(newTab) {
     notFound.classList.remove("active");
