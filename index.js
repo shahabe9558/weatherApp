@@ -17,8 +17,7 @@ let currentTab = userTab;
 currentTab.classList.add("currentTab");
 getFromSessionStorage();
 
-// checking failed due
-
+// con-- nto working properly
 function switchTab(newTab) {
     notFound.classList.remove("active");
     // check if newTab is already selected or not 
