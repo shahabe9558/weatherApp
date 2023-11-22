@@ -1,6 +1,6 @@
 // API Key
 
-// changes nit reflect 
+// final checking for commit 
 const API_KEY = "48394ddb7198d553ec33128fced2ead6";
 
 const userTab = document.querySelector("[data-userWeather]");
