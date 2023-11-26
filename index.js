@@ -75,9 +75,6 @@ async function fetchWeatherInfo(coordinates) {
 
     // loading 
     loadingContainer.classList.add('active');
-
-
-    https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=
     // try - catch Block
     try {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
@@ -120,3 +117,65 @@ function renderWeatherInfo(weatherInfo) {
     humidity.innerText = `${weatherInfo?.main?.humidity.toFixed(2)} %`;
     clouds.innerText = `${weatherInfo?.clouds?.all.toFixed(2)} %`;
 }
+
+const grantAccessButton = document.querySelector('[data-grantAccess]');
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+    else {
+        grantAccessButton.style.display = 'none';
+    }
+}
+
+function showPosition(position) {
+    const userCoordinates = {
+        lat: position.coords.latitude,
+        lon: position.coords.longitude
+    };
+    sessionStorage.setItem("userCoordinates", JSON.stringify(userCoordinates));
+    fetchWeatherInfo(userCoordinates);
+}
+
+grantAccessButton.addEventListener('click', getLocation);
+
+// Search for weather
+const searchInput = document.querySelector('[data-searchInput]');
+
+searchForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (searchInput.value === "") {
+        return;
+    }
+    // console.log(searchInput.value);
+    fetchSearchWeatherInfo(searchInput.value);
+    searchInput.value = "";
+});
+
+async function fetchSearchWeatherInfo(city) {
+    loadingContainer.classList.add("active");
+    userInfoContainer.classList.remove("active");
+    grantAccessContainer.classList.remove("active");
+    notFound.classList.remove("active");
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
+
+        const data = await response.json();
+        if (!data.sys) {
+            throw data;
+        }
+        loadingContainer.classList.remove('active');
+        userInfoContainer.classList.add('active');
+        renderWeatherInfo(data);
+    }
+    catch (err) {
+        loadingContainer.classList.remove('active');
+        userInfoContainer.classList.remove('active');
+        notFound.classList.add('active');
+        errorText.innerText = `${err?.message}`;
+        errorBtn.style.display = "none";
+    }
+}
+
+
