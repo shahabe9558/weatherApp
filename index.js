@@ -15,6 +15,11 @@ const errorBtn = document.querySelector('[data-errorButton]');
 const errorText = document.querySelector('[data-errorText]');
 const errorImage = document.querySelector('[data-errorImg]');
 
+const darkbtn = document.querySelector("[dark]");
+const lightbtn = document.querySelector("[light]");
+const wrapper = document.querySelector('.wrapper');
+
+
 let currentTab = userTab;
 currentTab.classList.add("currentTab");
 getFromSessionStorage();
@@ -178,4 +183,11 @@ async function fetchSearchWeatherInfo(city) {
     }
 }
 
+darkbtn.addEventListener('click', () => {
+    wrapper.classList.add('darkActive');
+});
+
+lightbtn.addEventListener('click', () => {
+    wrapper.classList.remove('darkActive');
+});
 
